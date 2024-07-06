@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-function App() {
+function Users() {
   const [users, setUsers] = useState([]);
   // const [user, setUser] = useState([]);
 
@@ -20,22 +20,22 @@ function App() {
     loadData();
   }, []);
   return (
-    <section className="text-center my-4">
+    <section className="py-4 text-center bg-white dark:bg-blue-gray-700">
       <h2 className="text-5xl">Total users : {users.length}</h2>
       <div></div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 m-6">
+      <div className="grid grid-cols-1 gap-6 m-6 md:grid-cols-2 lg:grid-cols-3">
         {users.map((user) => {
           return (
             <div
               key={user._id}
-              className="bg-blue-gray-900 text-white p-6 rounded my-4"
+              className="p-6 my-4 text-white rounded bg-blue-gray-900"
             >
               <h3 className="text-2xl font-body">Name : {user.name}</h3>
               <p>Email : {user.email}</p>
               <p>Age : {user.age}</p>
               <p>Salary : {user.salary}</p>
               <button
-                className="bg-green-600 px-4 py-1 rounded"
+                className="px-4 py-1 bg-green-600 rounded"
                 onClick={() => handleDetails(user.email)}
               >
                 View Details
@@ -48,4 +48,4 @@ function App() {
   );
 }
 
-export default App;
+export default Users;
