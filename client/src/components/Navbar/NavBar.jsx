@@ -5,13 +5,16 @@ import {
   Typography,
   IconButton,
   Button,
+  Spinner,
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { ThemeContext } from "../../providers/ThemeProvider/MyThemeProvider";
+import { AuthContext } from "../../providers/AuthProvider/AuthProvider";
 
 const NavList = () => {
   const items = [
+    { name: "Home", to: "/" },
     { name: "Pages", to: "pages" },
     { name: "Account", to: "account" },
     { name: "Blocks", to: "blocks" },
@@ -42,6 +45,7 @@ const NavList = () => {
 const NavBar = () => {
   const [openNav, setOpenNav] = React.useState(false);
   const { theme, toggleTheme } = useContext(ThemeContext);
+  const { user, loading, logOut } = useContext(AuthContext);
 
   const handleWindowResize = () =>
     window.innerWidth >= 960 && setOpenNav(false);
@@ -55,11 +59,11 @@ const NavBar = () => {
   }, []);
 
   return (
-    <Navbar className="min-w-full px-6 py-3 mx-auto rounded-none dark:bg-blue-gray-900">
+    <Navbar className="min-w-full px-6 py-3 mx-auto border-none rounded-none outline-none dark:bg-blue-gray-900">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Typography
           as="a"
-          href="#"
+          href="/"
           variant="h6"
           className="mr-4 cursor-pointer py-1.5 dark:text-white"
         >
@@ -69,6 +73,17 @@ const NavBar = () => {
           <NavList />
         </div>
         <div className="flex items-center gap-4 dark:text-white">
+          <>
+            {loading ? (
+              <Spinner color="blue" />
+            ) : user ? (
+              <Button onClick={logOut}>log out</Button>
+            ) : (
+              <Link to="login">
+                <Button>log in</Button>
+              </Link>
+            )}
+          </>
           <Button
             onClick={toggleTheme}
             className="p-0 bg-transparent hover:bg-transparent focus:bg-transparent active:bg-transparent"

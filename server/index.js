@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 const { MongoClient, ServerApiVersion } = require("mongodb");
 require("dotenv").config();
 
@@ -29,6 +30,22 @@ async function run() {
 
     // database
     const usersCollection = client.db("usersPracticeDB").collection("users");
+
+    //jwt
+    app.post("/jwt", async (req, res) => {
+      const user = req.body;
+      console.log(user);
+      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: "1h",
+      });
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          secure: false,
+          sameSite: "none",
+        })
+        .send({ success: true });
+    });
 
     // get all users data
     app.get("/users", async (req, res) => {
