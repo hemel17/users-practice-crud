@@ -22,16 +22,19 @@ const LogIn = () => {
       const loggedInUser = await logIn(data);
       console.log(loggedInUser);
       const user = { email: data.email };
-      const res = await axios.post("http://localhost:5000/jwt", user);
-      console.log(res.data);
-      Swal.fire({
-        title: "Good job!",
-        text: "Login Successful!",
-        icon: "success",
+      const res = await axios.post("http://localhost:5000/jwt", user, {
+        withCredentials: true,
       });
-      // .then(() => {
-      //   navigate(location?.state ? location.state : "/");
-      // });
+      console.log(res.data);
+      if (res.data?.success) {
+        Swal.fire({
+          title: "Good job!",
+          text: "Login Successful!",
+          icon: "success",
+        }).then(() => {
+          navigate(location?.state ? location.state : "/");
+        });
+      }
     } catch (error) {
       console.error(error);
       Swal.fire({

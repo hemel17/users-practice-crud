@@ -5,8 +5,6 @@ import LogIn from "../pages/LogIn/LogIn";
 import Register from "../pages/Register/Reigster";
 import Docs from "../pages/Docs/Docs";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
-import DocsDetails from "../pages/Docs/DocsDetails";
-import axios from "axios";
 
 const router = createBrowserRouter([
   {
@@ -32,12 +30,6 @@ const router = createBrowserRouter([
             <Docs />
           </PrivateRoute>
         ),
-      },
-      {
-        path: "docsDetails/:email",
-        element: <DocsDetails />,
-        loader: ({ params }) =>
-          axios.get(`http://localhost:5000/user?email=${params.email}`),
       },
     ],
   },

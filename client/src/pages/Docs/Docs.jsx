@@ -4,17 +4,12 @@ import { Link } from "react-router-dom";
 
 function Docs() {
   const [users, setUsers] = useState([]);
-  // const [user, setUser] = useState([]);
-
-  // const handleDetails = async (email) => {
-  //   const res = await axios.get(`http://localhost:5000/user?email=${email}`);
-  //   const data = res.data;
-  //   console.log(data);
-  // };
 
   useEffect(() => {
     const loadData = async () => {
-      const res = await axios.get("http://localhost:5000/users");
+      const res = await axios.get("http://localhost:5000/users", {
+        withCredentials: true,
+      });
       const data = res.data;
       setUsers(data);
     };
@@ -35,7 +30,7 @@ function Docs() {
               <p>Email : {user.email}</p>
               <p>Age : {user.age}</p>
               <p>Salary : {user.salary}</p>
-              <Link to={`/docsDetails/${user.email}`}>
+              <Link>
                 <button className="px-4 py-1 bg-green-600 rounded">
                   View Details
                 </button>

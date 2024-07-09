@@ -13,7 +13,9 @@ function Users() {
 
   useEffect(() => {
     const loadData = async () => {
-      const res = await axios.get("http://localhost:5000/users");
+      const res = await axios.get("http://localhost:5000/users", {
+        withCredentials: true,
+      });
       const data = res.data;
       setUsers(data);
     };
